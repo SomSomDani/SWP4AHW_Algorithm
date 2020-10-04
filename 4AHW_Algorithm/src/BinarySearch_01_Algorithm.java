@@ -7,7 +7,7 @@ public class BinarySearch_01_Algorithm {
         System.out.println("Änderung der Spannweite erfolgt im Programm Zeile 11");
         //Deklarationen
         int startnumber=1;
-        int spannweite = 10000000;
+        int spannweite = 1000;
         int [] numbers = new int[spannweite];
         int searchNumber = 0;
         boolean sequentiellFound;
@@ -70,9 +70,9 @@ public class BinarySearch_01_Algorithm {
             System.exit(0);
         }
 
-        System.out.println("Kontrollieren? [J,N]");
+        System.out.println("Wollen Sie das Array ausgeben? [y/n]");
 
-        if(scanner.next().toLowerCase().charAt(0)=='J') {
+        if(scanner.next().charAt(0)=='y') {
             //Array ausgeben
             for (int i = 0; i < numbers.length; i++) {
                 System.out.println(numbers[i]);
