@@ -6,30 +6,30 @@ public class BinarySearch_01_Algorithm {
     public static void main(String[] args) {
         System.out.println("Änderung der Spannweite erfolgt im Programm Zeile 11");
         //Deklarationen
-        int zaehler=1;
+        int startnumber=1;
         int spannweite = 10000000;
         int [] numbers = new int[spannweite];
         int searchNumber = 0;
         boolean sequentiellFound;
         boolean binaerFound;
         Random random = new Random();
-        Scanner reader = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         //Benutzereingabe
         System.out.println("[R]andom zahlen oder [N]ormal");
-        switch (reader.nextLine().toUpperCase().charAt(0)){
+        switch (scanner.nextLine().toUpperCase().charAt(0)){
             case 'N':
                 //Array normal befüllen
                 for(int i = 0; i < numbers.length; i++){
-                    numbers[i] = zaehler;
-                    zaehler++;
+                    numbers[i] = startnumber;
+                    startnumber++;
                 }
                 break;
             case'R':
                 //Array random befüllen
                 for(int i = 0; i < numbers.length; i++){
                     numbers[i] = random.nextInt(spannweite+1);
-                    zaehler++;
+                    startnumber++;
                 }
 
                 Arrays.sort(numbers);
@@ -40,13 +40,13 @@ public class BinarySearch_01_Algorithm {
                 break;
         }
         System.out.println("[R]andom Zahl oder [O]Selbst gewählte Zahl?");
-        switch (reader.nextLine().toUpperCase().charAt(0)){
+        switch (scanner.nextLine().toUpperCase().charAt(0)){
             case'R':
                 searchNumber= random.nextInt(spannweite+1);
                 break;
             case 'O':
                 System.out.println("Ihre Zahl: ");
-                searchNumber = reader.nextInt();
+                searchNumber = scanner.nextInt();
                 break;
             default:
                 System.out.println("Falsche Eingabe");
@@ -56,13 +56,13 @@ public class BinarySearch_01_Algorithm {
 
 
 
-        long startZeitSeq = System.nanoTime();
+        long searchTimeBeginSeq = System.nanoTime();
         sequentiellFound = sequentiellSearch(numbers, searchNumber);
-        long endZeitSeq = System.nanoTime();
-        long seqDauer = (endZeitSeq-startZeitSeq);
+        long searchTimeEndSeq = System.nanoTime();
+        long seqDifferenz = (searchTimeEndSeq-searchTimeBeginSeq);
         if(sequentiellFound==true){
 
-            System.out.println("Zahl " + searchNumber + " in " + seqDauer + " Nanosekunden mithilfe Sequentieller Suche in dem Array gefunden!");
+            System.out.println("Zahl " + searchNumber + " in " + seqDifferenz + " Nanosekunden mithilfe Sequentieller Suche in dem Array gefunden!");
         }
 
         else {
@@ -72,62 +72,63 @@ public class BinarySearch_01_Algorithm {
 
         System.out.println("Kontrollieren? [J,N]");
 
-        if(reader.next().toLowerCase().charAt(0)=='J') {
+        if(scanner.next().toLowerCase().charAt(0)=='J') {
             //Array ausgeben
             for (int i = 0; i < numbers.length; i++) {
                 System.out.println(numbers[i]);
             }
         }
 
-        long startZeitBinaer = System.nanoTime();
+        long searchTimeBeginBinaer = System.nanoTime();
         binaerFound = binaerSearch(numbers, searchNumber);
-        long endZeitBinaer = System.nanoTime();
-        long binDauer= (endZeitBinaer-startZeitBinaer);
+        long searchTimeEndBinaer = System.nanoTime();
+        long binDifferenz= (searchTimeEndBinaer-searchTimeBeginBinaer);
         if(binaerFound){
-            System.out.println("Zahl " + searchNumber + " in " + binDauer + " Nanosekunden mithilfe Binärer Suche in dem Array gefunden!");
+            System.out.println("Zahl " + searchNumber + " in " + binDifferenz + " Nanosekunden mithilfe Binärer Suche in dem Array gefunden!");
         }
         else{
             System.out.println("nicht gefunden");
         }
-        //Float zu Double, da Berechnung nicht funkt
-        double binDauerDouble = binDauer;
-        double seqDauerDouble = seqDauer;
-        double wievielSchneller = Math.round(100*(seqDauerDouble/binDauerDouble));
+        //Float zu Double, da der Wert von Float zu klein ist für so viele Nanosekunden
+        double binTimeDouble = binDifferenz;
+        double seqTimeDouble = seqDifferenz;
+        double DifferenzSeqtoBin = (seqDifferenz - binDifferenz);
+        double percentagefaster = Math.round(100*(seqTimeDouble/binTimeDouble));
         System.out.println();
         System.out.println("Vergleich: ");
-        System.out.print("Sequentielles Verfahren Dauer: " + seqDauer + " Nanosekunden  ,  ");
-        System.out.println("Binäres Verfahren Dauer: " + binDauer + " Nanosekunden");
-        System.out.println("Daraus folgt, dass das Binaere Verfahren um " + (seqDauer-binDauer) +
-                " Nanosekunden --> " + (wievielSchneller)/100 + " mal schneller ist!");
+        System.out.print("Sequentielles Verfahren Dauer: " + seqDifferenz + " Nanosekunden  ,  ");
+        System.out.println("Binäres Verfahren Dauer: " + binDifferenz + " Nanosekunden");
+        System.out.println("Daraus folgt, dass das Binaere Verfahren um " + (DifferenzSeqtoBin) +
+                " Nanosekunden --> " + (percentagefaster)/100 + " mal schneller ist!");
 
 
 
 
     }
-    public static boolean sequentiellSearch(int[] zahlen, int searchNumber){
-        for(int i=0; i < zahlen.length; i++){
-            if(zahlen[i]==searchNumber){
+    public static boolean sequentiellSearch(int[] numbers, int searchNumber){
+        for(int i=0; i < numbers.length; i++){
+            if(numbers[i]==searchNumber){
                 return true;
             }
         }
         return false;
     }
-    public static boolean binaerSearch(int[] zahlen, int searchNumber) {
+    public static boolean binaerSearch(int[] numbers, int searchNumber) {
         int minNumber=0;
-        int maxNumber = zahlen.length;
+        int maxNumber = numbers.length;
 
         int middle=(minNumber+maxNumber)/2;
-        while(zahlen[middle] != searchNumber && minNumber <= maxNumber ){
+        while(numbers[middle] != searchNumber && minNumber <= maxNumber ){
             middle=(minNumber+maxNumber)/2;
 
-            if(searchNumber > zahlen[middle]){
+            if(searchNumber > numbers[middle]){
                 minNumber=middle+1;
             }
-            if(searchNumber < zahlen[middle] ){
+            if(searchNumber < numbers[middle] ){
                 maxNumber=middle-1;
             }
         }
-        if(zahlen[middle]==searchNumber){
+        if(numbers[middle]==searchNumber){
             return true;
         }
         else{
