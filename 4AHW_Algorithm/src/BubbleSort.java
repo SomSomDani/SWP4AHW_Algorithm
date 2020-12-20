@@ -1,12 +1,15 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class BubbleSort {
 	static Scanner scanner = new Scanner(System.in);
 		static int counter = 0;
+		static int temp, index = 0;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BubbleSort ob = new BubbleSort();
 		int arr[] = new int[1000];
+		int arrTemp[] = new int[1000];
 		int highestNumber  = 1000;
 		
 		final long timeStart = System.currentTimeMillis();
@@ -14,6 +17,10 @@ public class BubbleSort {
 		for(int i = 0; i <arr.length; i++)
 		{
 			arr[i] = (int)(Math.random()*highestNumber);
+		}
+		for(int i = 0; i<arrTemp.length;i++)
+		{
+			arrTemp[i] = (int) (Math.random()*highestNumber);
 		}
 		System.out.println("Unsorted array");
 		ob.printArray(arr);
@@ -37,7 +44,7 @@ public class BubbleSort {
 				System.out.println("Time for sorting the array:" + (timeEnd2-timeStart) + " milliseconds");
 			break;
 			case "L":
-				ob.sortLotto(arr);
+				ob.sortLotto(arr, arrTemp);
 				printArray(arr);
 				final long timeEnd3= System.currentTimeMillis();
 				System.out.println("Time for sorting the array:" + (timeEnd3-timeStart) + " milliseconds");
@@ -107,21 +114,15 @@ public class BubbleSort {
 			}
 		}
 	}
-	public void sortLotto(int arr[])
+	public void sortLotto(int arr[],int arrTemp[])
 	{
-		int n = 0;
-		int number;
-		for(int i = 0; i<arr.length;i++)
-		{
-			 if(arr[i] == n)
-			 {
-				 number = n;
-				 if(arr[arr.length] < number)
-				 {
-					 n = arr[arr.length];
-					 arr[arr.length] = number;
-				 }
-			 }
-		}
+		for (int i = 0; i < arr.length; i++) {
+            Random rnd = new Random();
+            index = rnd.nextInt(arrTemp.length - i);
+            arr[i] = arrTemp[index];
+            temp = arrTemp[arrTemp.length - i - 1];
+            arrTemp[arrTemp.length - i - 1] = arrTemp[index];
+            arrTemp[index] = temp;
+        }
 	}
 }

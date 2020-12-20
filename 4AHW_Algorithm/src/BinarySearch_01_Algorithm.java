@@ -136,4 +136,36 @@ public class BinarySearch_01_Algorithm {
         }
 
     }
+    public void sortUpwards (int arr[])
+	{
+		int n = arr.length;
+		for(int i = 1; i<n;i++)
+		{
+			int key = arr[i];
+			int j = i-1;
+			
+			while(j>= 0 && arr[j] > key)
+			{
+				arr[j+1] = arr[j];
+				j=j-1;
+			}
+			arr[j+1] = key;
+		}
+	}
+	public void sortDownwards(int arr[])
+	{
+		int n;
+		for(int i = 1; i< arr.length;i++)
+		{
+			for(int j = 0; j<arr.length-i;j++)
+			{
+				if(arr[j]<arr[j+1])
+				{
+					n = arr[j];
+					arr[j]=arr[j+1];
+					arr[j+1]=n;
+				}
+			}
+		}
+	}
 }

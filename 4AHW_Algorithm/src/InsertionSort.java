@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 // Diese Aufgabe sollte uns zeigen, dass er mehrere Arten von Sortierungen gibt und welche am Schnellsten oder am Langsamten ist
@@ -5,25 +6,30 @@ import java.util.Scanner;
 
 public class InsertionSort {
 	static Scanner scanner = new Scanner(System.in);
+	static int index, temp = 0;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		InsertionSort ob = new InsertionSort();
 		int arr[] = new int [10];
+		int arrTemp[] = new int [10];
 		int highestNumber = 20;
-		int searchNumber = 10;
 		System.out.println("Filling array with random numbers:");
 		if(scanner.next().equals("y"))
 		{
 			for(int i = 0; i <arr.length; i++)
 			{
 				arr[i] = (int)(Math.random()*highestNumber);
+				
+			}
+			for(int i = 0; i<arrTemp.length;i++)
+			{
+				arrTemp[i] = (int) (Math.random()*highestNumber);
 			}
 		}
 		final long timeStart = System.currentTimeMillis();
 		System.out.println("Unsorted Array:");
 		printArray(arr);
 		System.out.println("Sorting begins!");
-		binaerSearch(arr, searchNumber);
 		printArray(arr);
 		System.out.println("Sorting upwards, downwards or Lotto [U,D,L]");
 		switch (scanner.next().toUpperCase())	// Cases to use the right option to sort the array
@@ -41,7 +47,7 @@ public class InsertionSort {
 				System.out.println("Time for sorting the array:" + (timeEnd2-timeStart) + " milliseconds");
 			break;
 			case "L":
-				ob.sortLotto(arr);
+				ob.sortLotto(arr, arrTemp);
 				printArray(arr);
 				final long timeEnd3= System.currentTimeMillis();
 				System.out.println("Time for sorting the array:" + (timeEnd3-timeStart) + " milliseconds");
@@ -92,44 +98,15 @@ public class InsertionSort {
 			}
 		}
 	}
-	public void sortLotto(int arr[])
+	public void sortLotto(int arr[], int arrTemp[])
 	{
-		int n = 0;
-		int number;
-		for(int i = 0; i<arr.length;i++)
-		{
-			 if(arr[i] == n)
-			 {
-				 number = n;
-				 if(arr[arr.length] < number)
-				 {
-					 n = arr[arr.length];
-					 arr[arr.length] = number;
-				 }
-			 }
-		}
+		for (int i = 0; i < arr.length; i++) {
+            Random rnd = new Random();
+            index = rnd.nextInt(arrTemp.length - i);
+            arr[i] = arrTemp[index];
+            temp = arrTemp[arrTemp.length - i - 1];
+            arrTemp[arrTemp.length - i - 1] = arrTemp[index];
+            arrTemp[index] = temp;
+        }
 	}
-	public static boolean binaerSearch(int[] arr, int searchNumber) {
-        int minNumber=0;
-        int maxNumber = arr.length;
-
-        int middle=(minNumber+maxNumber)/2;
-        while(arr[middle] != searchNumber && minNumber <= maxNumber ){
-            middle=(minNumber+maxNumber)/2;
-
-            if(searchNumber > arr[middle]){
-                minNumber=middle+1;
-            }
-            if(searchNumber < arr[middle] ){
-                maxNumber=middle-1;
-            }
-        }
-        if(arr[middle]==searchNumber){
-            return true;
-        }
-        else{
-            return  false;
-        }
-
-    }
 }
