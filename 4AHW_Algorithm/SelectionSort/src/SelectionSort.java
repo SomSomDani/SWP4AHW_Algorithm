@@ -8,23 +8,28 @@ public class SelectionSort {
     static int swapBubbleSort;
     static int countInsertionSort;
     static int swapInsertionSort;
+    static int swapQuickSort;
+    static int countQuickSort;
     static double calc;
     static long dauer1;
     static long dauer2;
     static long dauer3;
     static long dauer4;
+    static long dauer5;
     static long startdauer1;
     static long startdauer2;
     static long startdauer3;
     static long startdauer4;
+    static long startdauer5;
     static long enddauer1;
     static long enddauer2;
     static long enddauer3;
     static long enddauer4;
+    static long enddauer5;
 
     public static void main(String[] args) {
         for (int i = 0; i <= 0; i++) {
-            int[] arr = new int[100];
+            int[] arr = new int[1000];
             int range = 10;
 
             randomArray(arr, range);
@@ -46,6 +51,10 @@ public class SelectionSort {
             insertionSort(arr);
             average(arr);
             //printArray(arr);
+
+            randomArray(arr, range);
+            quickSort(arr, 0, arr.length-1);
+            average(arr);
 
         }
         System.out.println("UnstableSelektionSort: ");
@@ -70,6 +79,12 @@ public class SelectionSort {
         System.out.println("Vergleichoperationen: " + countInsertionSort);
         System.out.println("Tauschoperationen: " + swapInsertionSort);
         System.out.println("Dauer: " + dauer4);
+        System.out.println("");
+
+        System.out.println("QuickSort: ");
+        System.out.println("Vergleichoperationen: " + countInsertionSort);
+        System.out.println("Tauschoperationen: " + swapInsertionSort);
+        System.out.println("Dauer: " + dauer5);
         System.out.println("");
     }
 
@@ -165,7 +180,41 @@ public class SelectionSort {
         dauer4 = enddauer4 - startdauer4;
         return 0;
     }
-
+    static void swap(int[] arr, int i, int j)
+    {
+        int temp= arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    static int partition (int[] arr, int low, int high)
+    {
+        int pivot = arr[high];
+        int i = (low -1);
+        for(int j = low; j<= high -1 ; j++)
+        {
+            countQuickSort++;
+            if(arr[j] < pivot)
+            {
+                i++;
+                swap(arr,i,j);
+                swapQuickSort++;
+            }
+        }
+        swap(arr,i+1,high);
+        return(i+1);
+    }
+    static void quickSort(int[] arr, int low, int high)
+    {
+        startdauer5 = System.nanoTime();
+        if(low < high)
+        {
+            int pi = partition(arr, low ,high);
+            quickSort(arr, low, pi-1);
+            quickSort(arr, pi+1, high);
+        }
+        enddauer5 = System.nanoTime();
+        dauer5 = enddauer5 - startdauer5;
+    }
     public static double average(int[] arr) {
         calc = 0;
         for (int i = 0; i < arr.length; i++) {
