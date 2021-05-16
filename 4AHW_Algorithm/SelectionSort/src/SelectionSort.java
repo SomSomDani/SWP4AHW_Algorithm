@@ -3,9 +3,9 @@ public class SelectionSort {
     static int countSelectionSort;
     static int countSelectionSortStable;
     static int countBubbleSort;
+    static int swapBubbleSort;
     static int swapSelectionSort;
     static int swapSelectionSortStable;
-    static int swapBubbleSort;
     static int countInsertionSort;
     static int swapInsertionSort;
     static int swapQuickSort;
@@ -82,8 +82,8 @@ public class SelectionSort {
         System.out.println("");
 
         System.out.println("QuickSort: ");
-        System.out.println("Vergleichoperationen: " + countInsertionSort);
-        System.out.println("Tauschoperationen: " + swapInsertionSort);
+        System.out.println("Vergleichoperationen: " + countQuickSort);
+        System.out.println("Tauschoperationen: " + swapQuickSort);
         System.out.println("Dauer: " + dauer5);
         System.out.println("");
     }
